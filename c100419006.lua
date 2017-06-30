@@ -68,7 +68,7 @@ function c100419006.fselect(c,mg,sg,tp,fc)
 	sg:AddCard(c)
 	local res=false
 	if sg:GetCount()==3 then
-		res=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		res=Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 	else
 		res=mg:IsExists(c100419006.fselect,1,sg,mg,sg,tp,fc)
 	end
@@ -112,15 +112,15 @@ end
 function c100419006.sprfilter3(c,tp,fc,mc1,mc2)
 	local g=Group.FromCards(c,mc1,mc2)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and not c:IsFusionAttribute(mc1:GetFusionAttribute()) and not c:IsFusionAttribute(mc2:GetFusionAttribute())
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 end
 function c100419006.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,c100419006.sprfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
+	local g1=Duel.SelectMatchingCard(tp,c100419006.sprfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,c100419006.sprfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),tp,c,g1:GetFirst())
+	local g2=Duel.SelectMatchingCard(tp,c100419006.sprfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),tp,c,g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g3=Duel.SelectMatchingCard(tp,c100419006.sprfilter3,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),tp,c,g1:GetFirst(),g2:GetFirst())
+	local g3=Duel.SelectMatchingCard(tp,c100419006.sprfilter3,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),tp,c,g1:GetFirst(),g2:GetFirst())
 	g1:Merge(g2)
 	g1:Merge(g3)
 	Duel.SendtoGrave(g1,REASON_COST)
