@@ -40,10 +40,11 @@ function c100419018.drcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
 	local rs=rc:GetSequence()
 	if not rc:IsOnField() or (rc:IsLocation(LOCATION_SZONE) and rs>=5) then return false end
+	local seq=c:GetSequence()
 	if rc:IsControler(tp) then
-		return rs==seq or (seq==1 and rs==5) or (seq==3 and rs==6)
+		return rs==seq or (seq==5 and rs==1) or (seq==6 and rs==3)
 	else
-		return rs==4-seq or (seq==1 and rs==6) or (seq==3 and rs==5)
+		return rs==4-seq or (seq==6 and rs==1) or (seq==5 and rs==3)
 	end
 end
 function c100419018.cfilter(c)

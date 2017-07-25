@@ -31,7 +31,20 @@ function c79176962.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c79176962.thfilter(c,hc)
-	return c:IsAbleToHand() and aux.checksamecolumn(c,hc)
+	return c:IsAbleToHand() and c79176962.cscfilter(c,hc)
+end
+function c79176962.cscfilter(c1,c2)
+	if not c1 or not c1:IsOnField() or not c2 or not c2:IsOnField() then return false end
+	if c1==c2 then return false end
+	local s1=c1:GetSequence()
+	local s2=c2:GetSequence()
+	if (c1:IsLocation(LOCATION_SZONE) and s1>=5)
+		or (c2:IsLocation(LOCATION_SZONE) and s2>=5) then return false end
+	if c1:GetControler()==c2:GetControler() then
+		return s2==s1 or (s1==1 and s2==5) or (s1==3 and s2==6)
+	else
+		return s2==4-s1 or (s1==1 and s2==6) or (s1==3 and s2==5)
+	end
 end
 function c79176962.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c79176962.thfilter,tp,0,LOCATION_ONFIELD,nil,e:GetHandler())
